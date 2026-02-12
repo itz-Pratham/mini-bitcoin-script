@@ -1,6 +1,28 @@
 [package]
 name = "mini-bitcoin-script"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+rust-version = "1.63"
+description = "Minimal, protocol-accurate Bitcoin Script parsing and execution engine"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/itz-Pratham/mini-bitcoin-script"
+documentation = "https://docs.rs/mini-bitcoin-script"
+keywords = ["bitcoin", "script", "blockchain", "crypto", "p2pkh"]
+categories = ["cryptography", "parser-implementations"]
+readme = "README.md"
 
 [dependencies]
+sha2 = "0.10"
+ripemd = "0.1"
+
+[dependencies.secp256k1]
+version = "0.29"
+optional = true
+features = ["global-context"]
+
+[dev-dependencies]
+hex-literal = "0.4"
+
+[features]
+default = []
+secp256k1 = ["dep:secp256k1"]
