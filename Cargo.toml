@@ -10,6 +10,7 @@ documentation = "https://docs.rs/mini-bitcoin-script"
 keywords = ["bitcoin", "script", "blockchain", "crypto", "p2pkh"]
 categories = ["cryptography", "parser-implementations"]
 readme = "README.md"
+exclude = ["plans/", ".github/"]
 
 [dependencies]
 sha2 = "0.10"
