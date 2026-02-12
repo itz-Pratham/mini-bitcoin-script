@@ -337,9 +337,7 @@ fn verify_ecdsa(sig_bytes: &[u8], pubkey_bytes: &[u8], sighash: &[u8; 32]) -> bo
         Err(_) => return false,
     };
 
-    let message = match Message::from_digest(*sighash) {
-        msg => msg,
-    };
+    let message = Message::from_digest(*sighash);
 
     secp.verify_ecdsa(&message, &signature, &public_key).is_ok()
 }
@@ -363,27 +361,27 @@ mod tests {
 
     #[test]
     fn empty_script_returns_false() {
-        assert_eq!(execute(&[]).unwrap(), false);
+        assert!(!execute(&[]).unwrap());
     }
 
     #[test]
     fn op0_is_false() {
-        assert_eq!(execute(&[op(Opcode::Op0)]).unwrap(), false);
+        assert!(!execute(&[op(Opcode::Op0)]).unwrap());
     }
 
     #[test]
     fn op1_is_true() {
-        assert_eq!(execute(&[op(Opcode::Op1)]).unwrap(), true);
+        assert!(execute(&[op(Opcode::Op1)]).unwrap());
     }
 
     #[test]
     fn push_data_true() {
-        assert_eq!(execute(&[push(&[0x42])]).unwrap(), true);
+        assert!(execute(&[push(&[0x42])]).unwrap());
     }
 
     #[test]
     fn push_data_empty_is_false() {
-        assert_eq!(execute(&[push(&[])]).unwrap(), false);
+        assert!(!execute(&[push(&[])]).unwrap());
     }
 
     // ── Constants ────────────────────────────────────────────────────
@@ -415,13 +413,13 @@ mod tests {
     #[test]
     fn op_nop() {
         let tokens = [op(Opcode::Op1), op(Opcode::OpNop)];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
     fn op_verify_true() {
         let tokens = [op(Opcode::Op1), op(Opcode::OpVerify), op(Opcode::Op1)];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
@@ -661,13 +659,13 @@ mod tests {
             push(&[0x01, 0x02]),
             op(Opcode::OpEqual),
         ];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
     fn op_equal_false() {
         let tokens = [push(&[0x01]), push(&[0x02]), op(Opcode::OpEqual)];
-        assert_eq!(execute(&tokens).unwrap(), false);
+        assert!(!execute(&tokens).unwrap());
     }
 
     #[test]
@@ -678,7 +676,7 @@ mod tests {
             op(Opcode::OpEqualVerify),
             op(Opcode::Op1),
         ];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
@@ -693,19 +691,19 @@ mod tests {
     #[test]
     fn op_not_zero_becomes_one() {
         let tokens = [op(Opcode::Op0), op(Opcode::OpNot)];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
     fn op_not_one_becomes_zero() {
         let tokens = [op(Opcode::Op1), op(Opcode::OpNot)];
-        assert_eq!(execute(&tokens).unwrap(), false);
+        assert!(!execute(&tokens).unwrap());
     }
 
     #[test]
     fn op_not_other_becomes_zero() {
         let tokens = [op(Opcode::Op2), op(Opcode::OpNot)];
-        assert_eq!(execute(&tokens).unwrap(), false);
+        assert!(!execute(&tokens).unwrap());
     }
 
     // ── Crypto ───────────────────────────────────────────────────────
@@ -735,7 +733,7 @@ mod tests {
     #[test]
     fn checksig_stub_always_true() {
         let tokens = [push(&[0x00]), push(&[0x00]), op(Opcode::OpCheckSig)];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     #[test]
@@ -746,7 +744,7 @@ mod tests {
             op(Opcode::OpCheckSigVerify),
             op(Opcode::Op1),
         ];
-        assert_eq!(execute(&tokens).unwrap(), true);
+        assert!(execute(&tokens).unwrap());
     }
 
     // ── encode_num ───────────────────────────────────────────────────
