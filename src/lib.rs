@@ -8,7 +8,7 @@
 //!
 //! # What this crate implements
 //!
-//! - **Tokenizer**: Parses raw script bytes into a sequence of [`Token`]s,
+//! - **Tokenizer**: Parses raw script bytes into a sequence of [`token::Token`]s,
 //!   handling all four push-data encodings (direct, PUSHDATA1/2/4).
 //! - **Execution engine**: A stack-based virtual machine that executes
 //!   tokenized scripts with support for 27 opcodes including conditionals,
