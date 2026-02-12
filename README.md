@@ -1,10 +1,18 @@
 # mini-bitcoin-script
 
-Minimal, protocol-accurate Bitcoin Script parsing and execution engine in Rust.
+Minimal Bitcoin Script parsing and execution engine in Rust, built for education and tooling.
 
 [![Crates.io](https://img.shields.io/crates/v/mini-bitcoin-script)](https://crates.io/crates/mini-bitcoin-script)
 [![Docs.rs](https://docs.rs/mini-bitcoin-script/badge.svg)](https://docs.rs/mini-bitcoin-script)
 [![License](https://img.shields.io/crates/l/mini-bitcoin-script)](LICENSE)
+
+> **WARNING: This crate is NOT consensus-compatible with Bitcoin Core.**
+> It must not be used to validate real transactions or protect real funds.
+> Any reimplementation of Bitcoin Script may have subtle behavioral
+> differences that could lead to accepting or rejecting transactions
+> differently from the Bitcoin network. This crate exists for
+> **educational purposes, script debugging, tooling, and learning how
+> Bitcoin Script works internally.**
 
 ## What this crate does
 
@@ -106,7 +114,20 @@ cargo run --example inspect  # Parse and display script tokens
 
 ## Security disclaimer
 
-**This crate is for educational and experimental use only.** It is not consensus-compatible with Bitcoin Core and must not be used to validate real transactions or protect real funds.
+**This crate is NOT consensus-compatible with Bitcoin Core and must never be
+used to validate real transactions or protect real funds.**
+
+A reimplementation of Bitcoin Script cannot guarantee identical behavior
+to Bitcoin Core's C++ interpreter across all edge cases — number encoding
+boundaries, error ordering, stack overflow semantics, and other subtle
+behaviors that define Bitcoin's consensus rules. Even minor discrepancies
+could cause a node to accept or reject transactions differently from the
+rest of the network, potentially leading to chain splits or loss of funds.
+
+This crate is intended for:
+- **Education** — learning how Bitcoin Script works internally
+- **Tooling** — script inspection, debugging, and construction
+- **Testing** — validating script logic before broadcast
 
 ## License
 

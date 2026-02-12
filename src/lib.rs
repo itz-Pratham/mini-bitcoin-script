@@ -1,10 +1,28 @@
-//! Minimal, protocol-accurate Bitcoin Script parsing and execution engine.
+//! Minimal Bitcoin Script parsing and execution engine, built for
+//! education and tooling.
 //!
 //! Bitcoin Script is the stack-based programming language used to define
 //! spending conditions for Bitcoin transaction outputs. This crate implements
 //! a subset of the Script instruction set sufficient for understanding and
 //! validating common transaction patterns, including Pay-to-Public-Key-Hash
 //! (P2PKH).
+//!
+//! # Consensus warning
+//!
+//! **This crate is NOT consensus-compatible with Bitcoin Core.**
+//!
+//! A reimplementation of Bitcoin Script cannot guarantee identical
+//! behavior to Bitcoin Core's C++ interpreter across all edge cases —
+//! number encoding boundaries, error ordering, stack overflow semantics,
+//! and other subtle behaviors that define Bitcoin's consensus rules.
+//!
+//! **Do not use this crate to validate real transactions or protect real
+//! funds.**
+//!
+//! This crate is intended for:
+//! - **Education** — learning how Bitcoin Script works internally
+//! - **Tooling** — script inspection, debugging, and construction
+//! - **Testing** — validating script logic before broadcast
 //!
 //! # What this crate implements
 //!
@@ -37,9 +55,8 @@
 //!
 //! # Security disclaimer
 //!
-//! **This crate is for educational and experimental use only.** It is not
-//! consensus-compatible with Bitcoin Core and must not be used to validate
-//! real transactions or protect real funds.
+//! **This crate is NOT consensus-compatible with Bitcoin Core.** It must
+//! not be used to validate real transactions or protect real funds.
 //!
 //! # Quick example
 //!
